@@ -1,7 +1,7 @@
 import './pages/index.css';
 import {initialCards} from './scripts/cards.js';
 import {createCard, removeCard, likeCard} from "./scripts/card";
-import {openPopup, closePopup, closeByCrossOrOverlay} from "./scripts/modal";
+import {openModal, closeModal, closeByCrossOrOverlay} from "./scripts/modal";
 
 const placesList = document.querySelector('.places__list');
 const editButton = document.querySelector('.profile__edit-button');
@@ -31,23 +31,22 @@ newCardPopup.addEventListener('click', evt => closeByCrossOrOverlay(evt, newCard
 editButton.addEventListener('click', evt => {
     nameInput.value = profileTitle.textContent;
     jobInput.value = profileDescription.textContent;
-    openPopup(editProfilePopup);
+    openModal(editProfilePopup);
 });
 
 newCardButton.addEventListener('click', evt => {
-    openPopup(newCardPopup);
+    openModal(newCardPopup);
 });
 
 profileForm.addEventListener('submit', handleProfileFormSubmit);
 
 placesForm.addEventListener('submit', handlePlacesFormSubmit);
 
-
 function handleProfileFormSubmit(evt) {
     evt.preventDefault();
     profileTitle.textContent = nameInput.value;
     profileDescription.textContent = jobInput.value;
-    closePopup(editProfilePopup);
+    closeModal(editProfilePopup);
 }
 
 function handlePlacesFormSubmit(evt) {
@@ -60,14 +59,14 @@ function handlePlacesFormSubmit(evt) {
     placesList.prepend(createCard(newCard, removeCard, openCardPopup, likeCard))
     placesNameInput.value = '';
     placesUrlInput.value = '';
-    closePopup(newCardPopup);
+    closeModal(newCardPopup);
 }
 
 const openCardPopup = (card) => {
     popupImage.querySelector('.popup__image').src = card.querySelector('.card__image').src;
     popupImage.querySelector('.popup__caption').textContent = card.querySelector('.card__title').textContent;
-    popupImage.addEventListener('click', (evt) => closePopup(popupImage, evt));
-    openPopup(popupImage);
+    popupImage.addEventListener('click', (evt) => closeModal(popupImage, evt));
+    openModal(popupImage);
 }
 
 initialCards.forEach(function (item) {
