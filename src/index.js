@@ -1,6 +1,6 @@
 import './pages/index.css';
 import {initialCards} from './scripts/cards.js';
-import {createCard, removeCard} from "./scripts/card";
+import {createCard, removeCard, likeCard} from "./scripts/card";
 import {openPopup, closePopup, closeByCrossOrOverlay} from "./scripts/modal";
 
 const placesList = document.querySelector('.places__list');
@@ -53,7 +53,7 @@ function handlePlacesFormSubmit(evt) {
         link: placesUrlInput.value,
     };
 
-    placesList.prepend(createCard(newCard, removeCard, openCardPopup))
+    placesList.prepend(createCard(newCard, removeCard, openCardPopup, likeCard))
     placesNameInput.value = '';
     placesUrlInput.value = '';
     closePopup(newCardPopup);
@@ -68,5 +68,5 @@ const openCardPopup = (card) => {
 }
 
 initialCards.forEach(function (item) {
-    placesList.append(createCard(item, removeCard, openCardPopup));
+    placesList.append(createCard(item, removeCard, openCardPopup, likeCard));
 });
