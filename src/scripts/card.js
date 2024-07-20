@@ -1,13 +1,19 @@
 const cardTemplate = document.querySelector('#card-template').content;
 
-function createCard(cardInfo, remove) {
+function createCard(cardInfo, remove, openCardPopup) {
     const cardElement = cardTemplate.querySelector('.places__item').cloneNode(true);
-    cardElement.querySelector('.card__image').src = cardInfo.link;
-    cardElement.querySelector('.card__image').alt = `Фотография: ${cardInfo.name}`;
+    const cardImage = cardElement.querySelector('.card__image');
     cardElement.querySelector('.card__title').textContent = cardInfo.name;
+
+    cardImage.src = cardInfo.link;
+    cardImage.alt = `Фотография: ${cardInfo.name}`;
 
     const removeButton = cardElement.querySelector('.card__delete-button');
     removeButton.addEventListener('click', () => remove(cardElement));
+
+    cardImage.addEventListener('click', evt => {
+        openCardPopup(cardElement);
+    })
 
     return cardElement;
 }
