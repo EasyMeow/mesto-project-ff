@@ -8,6 +8,7 @@ const editButton = document.querySelector('.profile__edit-button');
 const editProfilePopup = document.querySelector('.popup_type_edit');
 const newCardButton = document.querySelector('.profile__add-button');
 const newCardPopup = document.querySelector('.popup_type_new-card');
+const popupImage = document.querySelector('.popup_type_image');
 
 const profileTitle = document.querySelector('.profile__title');
 const profileDescription = document.querySelector('.profile__description');
@@ -16,10 +17,13 @@ const profileForm = editProfilePopup.querySelector('.popup__form');
 const nameInput = document.querySelector('.popup__input_type_name');
 const jobInput = document.querySelector('.popup__input_type_description');
 
-
 const placesForm = newCardPopup.querySelector('.popup__form');
 const placesNameInput = document.querySelector('.popup__input_type_card-name');
 const placesUrlInput = document.querySelector('.popup__input_type_url');
+
+editProfilePopup.classList.add('popup_is-animated');
+newCardPopup.classList.add('popup_is-animated');
+popupImage.classList.add('popup_is-animated');
 
 editProfilePopup.addEventListener('click', evt => closeByCrossOrOverlay(evt, editProfilePopup));
 newCardPopup.addEventListener('click', evt => closeByCrossOrOverlay(evt, newCardPopup));
@@ -60,11 +64,10 @@ function handlePlacesFormSubmit(evt) {
 }
 
 const openCardPopup = (card) => {
-    const popup = document.querySelector('.popup_type_image');
-    popup.querySelector('.popup__image').src = card.querySelector('.card__image').src;
-    popup.querySelector('.popup__caption').textContent = card.querySelector('.card__title').textContent;
-    popup.addEventListener('click', (evt) => closePopup(popup, evt));
-    openPopup(popup);
+    popupImage.querySelector('.popup__image').src = card.querySelector('.card__image').src;
+    popupImage.querySelector('.popup__caption').textContent = card.querySelector('.card__title').textContent;
+    popupImage.addEventListener('click', (evt) => closePopup(popupImage, evt));
+    openPopup(popupImage);
 }
 
 initialCards.forEach(function (item) {
