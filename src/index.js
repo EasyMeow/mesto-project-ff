@@ -48,9 +48,9 @@ function handlePlacesFormSubmit(evt) {
     closeModal(newCardPopup);
 }
 
-const openCardPopup = (card) => {
-    popupImage.src = card.querySelector('.card__image').src;
-    popupCaption.textContent = card.querySelector('.card__title').textContent;
+const openCardPopup = (cardInfo) => {
+    popupImage.src = cardInfo.link;
+    popupCaption.textContent = cardInfo.name;
     openModal(newImagePopup);
 }
 

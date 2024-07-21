@@ -12,7 +12,7 @@ function createCard(cardInfo, remove, openCardPopup, likeCard) {
     cardTitle.textContent = cardInfo.name
 
     removeButton.addEventListener('click', () => remove(cardElement));
-    cardImage.addEventListener('click', () => openCardPopup(cardElement));
+    cardImage.addEventListener('click', () => openCardPopup(cardInfo));
     cardLike.addEventListener('click', () => likeCard(cardLike));
 
     return cardElement;
