@@ -8,7 +8,7 @@ const editButton = document.querySelector('.profile__edit-button');
 const editProfilePopup = document.querySelector('.popup_type_edit');
 const newCardButton = document.querySelector('.profile__add-button');
 const newCardPopup = document.querySelector('.popup_type_new-card');
-const popupImage = document.querySelector('.popup_type_image');
+const newImagePopup = document.querySelector('.popup_type_image');
 
 const profileTitle = document.querySelector('.profile__title');
 const profileDescription = document.querySelector('.profile__description');
@@ -21,26 +21,13 @@ const placesForm = newCardPopup.querySelector('.popup__form');
 const placesNameInput = document.querySelector('.popup__input_type_card-name');
 const placesUrlInput = document.querySelector('.popup__input_type_url');
 
+const popupImage = newImagePopup.querySelector('.popup__image');
+const popupCaption = newImagePopup.querySelector('.popup__caption');
+
+
 editProfilePopup.classList.add('popup_is-animated');
 newCardPopup.classList.add('popup_is-animated');
-popupImage.classList.add('popup_is-animated');
-
-editProfilePopup.addEventListener('click', evt => closeByCrossOrOverlay(evt, editProfilePopup));
-newCardPopup.addEventListener('click', evt => closeByCrossOrOverlay(evt, newCardPopup));
-
-editButton.addEventListener('click', evt => {
-    nameInput.value = profileTitle.textContent;
-    jobInput.value = profileDescription.textContent;
-    openModal(editProfilePopup);
-});
-
-newCardButton.addEventListener('click', evt => {
-    openModal(newCardPopup);
-});
-
-profileForm.addEventListener('submit', handleProfileFormSubmit);
-
-placesForm.addEventListener('submit', handlePlacesFormSubmit);
+newImagePopup.classList.add('popup_is-animated');
 
 function handleProfileFormSubmit(evt) {
     evt.preventDefault();
@@ -57,17 +44,35 @@ function handlePlacesFormSubmit(evt) {
     };
 
     placesList.prepend(createCard(newCard, removeCard, openCardPopup, likeCard))
-    placesNameInput.value = '';
-    placesUrlInput.value = '';
+    placesForm.reset();
     closeModal(newCardPopup);
 }
 
 const openCardPopup = (card) => {
-    popupImage.querySelector('.popup__image').src = card.querySelector('.card__image').src;
-    popupImage.querySelector('.popup__caption').textContent = card.querySelector('.card__title').textContent;
-    popupImage.addEventListener('click', (evt) => closeModal(popupImage, evt));
-    openModal(popupImage);
+    popupImage.src = card.querySelector('.card__image').src;
+    popupCaption.textContent = card.querySelector('.card__title').textContent;
+    openModal(newImagePopup);
 }
+
+editProfilePopup.addEventListener('click', evt => closeByCrossOrOverlay(evt, editProfilePopup));
+newCardPopup.addEventListener('click', evt => closeByCrossOrOverlay(evt, newCardPopup));
+newImagePopup.addEventListener('click', evt => closeByCrossOrOverlay(evt, newImagePopup));
+
+editButton.addEventListener('click', evt => {
+    nameInput.value = profileTitle.textContent;
+    jobInput.value = profileDescription.textContent;
+    openModal(editProfilePopup);
+});
+
+newCardButton.addEventListener('click', evt => {
+    openModal(newCardPopup);
+});
+
+profileForm.addEventListener('submit', handleProfileFormSubmit);
+
+placesForm.addEventListener('submit', handlePlacesFormSubmit);
+
+
 
 initialCards.forEach(function (item) {
     placesList.append(createCard(item, removeCard, openCardPopup, likeCard));

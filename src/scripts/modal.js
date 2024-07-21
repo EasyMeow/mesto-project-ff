@@ -14,7 +14,6 @@ function closeModal(popupElement) {
 
 function closeByCrossOrOverlay(evt, popupElement) {
     if (evt.target === evt.currentTarget || evt.target.classList.contains('popup__close')) {
-        popupElement.removeEventListener('click', (evt) => closeModal(evt, popupElement));
         closeModal(popupElement);
     }
 }
