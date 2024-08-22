@@ -44,8 +44,10 @@
                 placeholder="Имя"
                 required
                 minlength="2"
-                maxlength="40">
-        <!--TODO pattern-->
+                maxlength="40"
+                pattern="^[A-Za-zА-Яа-яЁё\s\-]+$"
+                data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
+        >
         <span class="name_error form__span_error">Вы пропустили это поле.</span>
         <input
                 type="text"
@@ -54,7 +56,10 @@
                 placeholder="Занятие"
                 required
                 minlength="2"
-                maxlength="200">
+                maxlength="200"
+                pattern="^[A-Za-zА-Яа-яЁё\s\-]+$"
+                data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
+        >
         <span class="description_error form__span_error">Вы пропустили это поле.</span>
         <button type="submit" class="button popup__button">Сохранить</button>
       </form>
@@ -73,6 +78,8 @@
                 required
                 minlength="2"
                 maxlength="30"
+                pattern="^[A-Za-zА-Яа-яЁё\s\-]+$"
+                data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
         >
         <span class="place-name_error form__span_error">Вы пропустили это поле.</span>
         <input
