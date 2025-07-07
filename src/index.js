@@ -1,5 +1,5 @@
 import './pages/index.css';
-import {initialCards} from './scripts/cards.js';
+import {getInitialCards, getAuthor} from "./scripts/api";
 import {createCard, removeCard, likeCard} from "./scripts/card";
 import {openModal, closeModal, closeByCrossOrOverlay} from "./scripts/modal";
 import {enableValidation, clearValidation} from "./scripts/validation";
@@ -33,6 +33,8 @@ const validationConfig = {
     inputErrorClass: 'popup__input_type_error',
     errorClass: 'popup__error_visible'
 };
+
+let idAuthor = '';
 
 editProfilePopup.classList.add('popup_is-animated');
 newCardPopup.classList.add('popup_is-animated');
@@ -83,9 +85,17 @@ profileForm.addEventListener('submit', handleProfileFormSubmit);
 
 placesForm.addEventListener('submit', handlePlacesFormSubmit);
 
-
-initialCards.forEach(function (item) {
-    placesList.append(createCard(item, removeCard, openCardPopup, likeCard));
-});
+Promise.all([getInitialCards(), getAuthor()])
+    .then(([cardList, authorData]) => {
+        idAuthor = authorData._id;
+        profileTitle.textContent = authorData.name;
+        profileDescription.textContent = authorData.about;
+        cardList.forEach((cardData) => {
+            placesList.append(createCard(cardData, removeCard, openCardPopup, likeCard));
+        });
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 
 enableValidation(validationConfig);
