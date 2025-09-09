@@ -77,6 +77,8 @@ editButton.addEventListener('click', evt => {
 });
 
 newCardButton.addEventListener('click', evt => {
+    placesNameInput.value = '';
+    placesUrlInput.value = '';
     clearValidation(newCardPopup, validationConfig);
     openModal(newCardPopup);
 });
