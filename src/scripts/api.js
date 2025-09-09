@@ -31,4 +31,38 @@ const getAuthor = () => {
         });
 }
 
-export {getInitialCards, getAuthor}
+const editAccount = (nameVar, aboutVar) => {
+    return fetch(`${config.baseUrl}/users/me`, {
+        method: 'PATCH',
+        headers: config.headers,
+        body: JSON.stringify({
+            name: nameVar,
+            about: aboutVar
+        })
+    })
+        .then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+            return Promise.reject(`Ошибка: ${res.status}`);
+        });
+}
+
+const addPlace = (nameVar, linkVar) => {
+    return fetch(`${config.baseUrl}/cards`, {
+        method: 'POST',
+        headers: config.headers,
+        body: JSON.stringify({
+            name: nameVar,
+            link: linkVar
+        })
+    })
+        .then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+            return Promise.reject(`Ошибка: ${res.status}`);
+        });
+}
+
+export {getInitialCards, getAuthor, editAccount, addPlace}

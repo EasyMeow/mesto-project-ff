@@ -1,5 +1,5 @@
 import './pages/index.css';
-import {getInitialCards, getAuthor} from "./scripts/api";
+import {getInitialCards, getAuthor, editAccount, addPlace} from "./scripts/api";
 import {createCard, removeCard, likeCard} from "./scripts/card";
 import {openModal, closeModal, closeByCrossOrOverlay} from "./scripts/modal";
 import {enableValidation, clearValidation} from "./scripts/validation";
@@ -42,9 +42,15 @@ newImagePopup.classList.add('popup_is-animated');
 
 function handleProfileFormSubmit(evt) {
     evt.preventDefault();
-    profileTitle.textContent = nameInput.value;
-    profileDescription.textContent = jobInput.value;
-    closeModal(editProfilePopup);
+    editAccount(nameInput.value, jobInput.value)
+        .then(() => {
+            profileTitle.textContent = nameInput.value;
+            profileDescription.textContent = jobInput.value;
+            closeModal(editProfilePopup);
+        })
+        .catch((err) => {
+            console.log(err); // выводим ошибку в консоль
+        });
 }
 
 function handlePlacesFormSubmit(evt) {
@@ -54,9 +60,15 @@ function handlePlacesFormSubmit(evt) {
         link: placesUrlInput.value,
     };
 
-    placesList.prepend(createCard(newCard, removeCard, openCardPopup, likeCard))
-    placesForm.reset();
-    closeModal(newCardPopup);
+    addPlace(placesNameInput.value, placesUrlInput.value)
+        .then((cardData) => {
+            placesList.prepend(createCard(cardData, removeCard, openCardPopup, likeCard))
+            placesForm.reset();
+            closeModal(newCardPopup);
+        })
+        .catch((err) => {
+            console.log(err); // выводим ошибку в консоль
+        })
 }
 
 const openCardPopup = (cardInfo) => {
