@@ -45,9 +45,11 @@ let idAuthor = '';
 editProfilePopup.classList.add('popup_is-animated');
 newCardPopup.classList.add('popup_is-animated');
 newImagePopup.classList.add('popup_is-animated');
+avatarPopup.classList.add('popup_is-animated');
 
 function handleProfileFormSubmit(evt) {
     evt.preventDefault();
+    editProfilePopup.querySelector('.popup__button').textContent = 'Сохранение...';
     editAccount(nameInput.value, jobInput.value)
         .then(() => {
             profileTitle.textContent = nameInput.value;
@@ -56,11 +58,15 @@ function handleProfileFormSubmit(evt) {
         })
         .catch((err) => {
             console.log(err); // выводим ошибку в консоль
-        });
+        })
+        .finally(() => {
+            editProfilePopup.querySelector('.popup__button').textContent = 'Сохранить';
+        })
 }
 
 function handleAvatarFormSubmit(evt) {
     evt.preventDefault();
+    avatarPopup.querySelector('.popup__button').textContent = 'Сохранение...';
     editAvatar(avatarUrlInput.value)
         .then(() => {
             avatar.style['background-image'] = `url('${avatarUrlInput.value}')`;
@@ -69,6 +75,9 @@ function handleAvatarFormSubmit(evt) {
         })
         .catch((err) => {
             console.log(err);
+        })
+        .finally(() => {
+            avatarPopup.querySelector('.popup__button').textContent = 'Сохранить';
         })
 }
 
@@ -79,6 +88,7 @@ function handlePlacesFormSubmit(evt) {
         link: placesUrlInput.value,
     };
 
+    newCardPopup.querySelector('.popup__button').textContent = 'Сохранение...';
     addPlace(placesNameInput.value, placesUrlInput.value)
         .then((cardData) => {
             placesList.prepend(createCard(cardData, removeCard, openCardPopup, likeCard, idAuthor))
@@ -87,6 +97,9 @@ function handlePlacesFormSubmit(evt) {
         })
         .catch((err) => {
             console.log(err); // выводим ошибку в консоль
+        })
+        .finally(() => {
+            newCardPopup.querySelector('.popup__button').textContent = 'Сохранить';
         })
 }
 
