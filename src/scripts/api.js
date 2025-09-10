@@ -65,6 +65,19 @@ const addPlace = (nameVar, linkVar) => {
         });
 }
 
+const deletePlace = (idPlace) => {
+    return fetch(`${config.baseUrl}/cards/${idPlace}`, {
+        method: 'DELETE',
+        headers: config.headers,
+    })
+        .then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+            return Promise.reject(`Ошибка: ${res.status}`);
+        });
+}
+
 const like = (idLike) => {
     return fetch(`${config.baseUrl}/cards/likes/${idLike}`, {
         method: 'PUT',
@@ -91,4 +104,4 @@ const disLike = (idLike) => {
         });
 }
 
-export {getInitialCards, getAuthor, editAccount, addPlace, like, disLike}
+export {getInitialCards, getAuthor, editAccount, addPlace, deletePlace, like, disLike}

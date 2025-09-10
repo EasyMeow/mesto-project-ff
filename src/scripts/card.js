@@ -1,4 +1,4 @@
-import {like, disLike} from './api.js';
+import {deletePlace, like, disLike} from './api.js';
 
 const cardTemplate = document.querySelector('#card-template').content;
 
@@ -22,15 +22,27 @@ function createCard(cardInfo, remove, openCardPopup, likeCard, authorId) {
         cardLike.classList.remove('card__like-button_is-active');
     }
 
-    removeButton.addEventListener('click', () => remove(cardElement));
+
+    if (cardInfo.owner._id === authorId && removeButton) {
+        removeButton.addEventListener('click', () => remove(cardInfo._id,cardElement));
+    } else {
+        removeButton.remove();
+    }
+
     cardImage.addEventListener('click', () => openCardPopup(cardInfo));
     cardLike.addEventListener('click', () => likeCard(cardLike, likesCount, cardInfo));
 
     return cardElement;
 }
 
-function removeCard(card) {
-    card.remove();
+function removeCard(id, card) {
+    deletePlace(id)
+        .then(() => {
+            card.remove();
+        })
+        .catch((err) => {
+            console.log(err); // выводим ошибку в консоль
+        })
 }
 
 function likeCard(likeElement, likesCount, cardInfo) {
