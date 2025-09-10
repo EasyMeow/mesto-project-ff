@@ -62,7 +62,7 @@ function handlePlacesFormSubmit(evt) {
 
     addPlace(placesNameInput.value, placesUrlInput.value)
         .then((cardData) => {
-            placesList.prepend(createCard(cardData, removeCard, openCardPopup, likeCard))
+            placesList.prepend(createCard(cardData, removeCard, openCardPopup, likeCard, idAuthor))
             placesForm.reset();
             closeModal(newCardPopup);
         })
@@ -105,7 +105,7 @@ Promise.all([getInitialCards(), getAuthor()])
         profileTitle.textContent = authorData.name;
         profileDescription.textContent = authorData.about;
         cardList.forEach((cardData) => {
-            placesList.append(createCard(cardData, removeCard, openCardPopup, likeCard));
+            placesList.append(createCard(cardData, removeCard, openCardPopup, likeCard, idAuthor));
         });
     })
     .catch((err) => {

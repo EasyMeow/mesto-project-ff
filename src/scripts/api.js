@@ -65,4 +65,30 @@ const addPlace = (nameVar, linkVar) => {
         });
 }
 
-export {getInitialCards, getAuthor, editAccount, addPlace}
+const like = (idLike) => {
+    return fetch(`${config.baseUrl}/cards/likes/${idLike}`, {
+        method: 'PUT',
+        headers: config.headers
+    })
+        .then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+            return Promise.reject(`Ошибка: ${res.status}`);
+        });
+}
+
+const disLike = (idLike) => {
+    return fetch(`${config.baseUrl}/cards/likes/${idLike}`, {
+        method: 'DELETE',
+        headers: config.headers
+    })
+        .then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+            return Promise.reject(`Ошибка: ${res.status}`);
+        });
+}
+
+export {getInitialCards, getAuthor, editAccount, addPlace, like, disLike}
