@@ -14,7 +14,7 @@
   </header>
   <main class="content">
     <section class="profile page__section">
-      <div class="profile__image"></div>
+      <div class="profile__image"><button class="profile__image-cover"></button></div>
       <div class="profile__info">
         <h1 class="profile__title">Жак-Ив Кусто</h1>
         <button class="profile__edit-button" type="button"></button>
@@ -99,6 +99,18 @@
       <img src="" alt="" class="popup__image">
       <p class="popup__caption"></p>
     </div>
+  </div>
+</div>
+
+<div class="popup popup_type_edit-avatar popup_is-animated">
+  <div class="popup__content ">
+    <button type="button" class="popup__close"></button>
+    <h3 class="popup__title">Обновить аватар</h3>
+    <form class="popup__form" name="new-avatar">
+      <input type="url" name="link" class="popup__input popup__input_type_url " placeholder="Ссылка на аватар" required>
+      <span class="link_error form__span_error">Необходимо заполнить данное поле</span>
+      <button type="submit" class="button popup__button">Сохранить</button>
+    </form>
   </div>
 </div>
 <!--<script src="./scripts/cards.js"></script>-->

@@ -48,6 +48,22 @@ const editAccount = (nameVar, aboutVar) => {
         });
 }
 
+const editAvatar = (avatarUrl) => {
+    return fetch(`${config.baseUrl}/users/me/avatar`, {
+        method: 'PATCH',
+        headers: config.headers,
+        body: JSON.stringify({
+            avatar: avatarUrl
+        })
+    })
+        .then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+            return Promise.reject(`Ошибка: ${res.status}`);
+        });
+}
+
 const addPlace = (nameVar, linkVar) => {
     return fetch(`${config.baseUrl}/cards`, {
         method: 'POST',
@@ -104,4 +120,4 @@ const disLike = (idLike) => {
         });
 }
 
-export {getInitialCards, getAuthor, editAccount, addPlace, deletePlace, like, disLike}
+export {getInitialCards, getAuthor, editAccount, editAvatar, addPlace, deletePlace, like, disLike}

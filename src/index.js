@@ -1,5 +1,5 @@
 import './pages/index.css';
-import {getInitialCards, getAuthor, editAccount, addPlace} from "./scripts/api";
+import {getInitialCards, getAuthor, editAccount, editAvatar, addPlace} from "./scripts/api";
 import {createCard, removeCard, likeCard} from "./scripts/card";
 import {openModal, closeModal, closeByCrossOrOverlay} from "./scripts/modal";
 import {enableValidation, clearValidation} from "./scripts/validation";
@@ -7,12 +7,18 @@ import {enableValidation, clearValidation} from "./scripts/validation";
 const placesList = document.querySelector('.places__list');
 const editButton = document.querySelector('.profile__edit-button');
 const editProfilePopup = document.querySelector('.popup_type_edit');
+const avatarPopup = document.querySelector('.popup_type_edit-avatar');
 const newCardButton = document.querySelector('.profile__add-button');
 const newCardPopup = document.querySelector('.popup_type_new-card');
 const newImagePopup = document.querySelector('.popup_type_image');
-
+const editAvatarButton = document.querySelector('.profile__image-cover');
 const profileTitle = document.querySelector('.profile__title');
+
 const profileDescription = document.querySelector('.profile__description');
+
+const avatarUrlInput = avatarPopup.querySelector('.popup__input_type_url');
+const avatarForm = avatarPopup.querySelector('.popup__form');
+const avatar = document.querySelector('.profile__image');
 
 const profileForm = editProfilePopup.querySelector('.popup__form');
 const nameInput = document.querySelector('.popup__input_type_name');
@@ -53,6 +59,19 @@ function handleProfileFormSubmit(evt) {
         });
 }
 
+function handleAvatarFormSubmit(evt) {
+    evt.preventDefault();
+    editAvatar(avatarUrlInput.value)
+        .then(() => {
+            avatar.style['background-image'] = `url('${avatarUrlInput.value}')`;
+            closeModal(avatarPopup);
+            avatarUrlInput.value = '';
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+}
+
 function handlePlacesFormSubmit(evt) {
     evt.preventDefault();
     const newCard = {
@@ -78,6 +97,7 @@ const openCardPopup = (cardInfo) => {
 }
 
 editProfilePopup.addEventListener('click', evt => closeByCrossOrOverlay(evt, editProfilePopup));
+avatarPopup.addEventListener('click', (evt) => closeByCrossOrOverlay(evt, avatarPopup));
 newCardPopup.addEventListener('click', evt => closeByCrossOrOverlay(evt, newCardPopup));
 newImagePopup.addEventListener('click', evt => closeByCrossOrOverlay(evt, newImagePopup));
 
@@ -88,6 +108,12 @@ editButton.addEventListener('click', evt => {
     openModal(editProfilePopup);
 });
 
+editAvatarButton.addEventListener('click', evt => {
+    avatarUrlInput.value = '';
+    clearValidation(avatarForm, validationConfig);
+    openModal(avatarPopup);
+})
+
 newCardButton.addEventListener('click', evt => {
     placesNameInput.value = '';
     placesUrlInput.value = '';
@@ -96,7 +122,7 @@ newCardButton.addEventListener('click', evt => {
 });
 
 profileForm.addEventListener('submit', handleProfileFormSubmit);
-
+avatarForm.addEventListener('submit', handleAvatarFormSubmit)
 placesForm.addEventListener('submit', handlePlacesFormSubmit);
 
 Promise.all([getInitialCards(), getAuthor()])
@@ -104,6 +130,7 @@ Promise.all([getInitialCards(), getAuthor()])
         idAuthor = authorData._id;
         profileTitle.textContent = authorData.name;
         profileDescription.textContent = authorData.about;
+        avatar.style['background-image'] = `url('${authorData.avatar}')`;
         cardList.forEach((cardData) => {
             placesList.append(createCard(cardData, removeCard, openCardPopup, likeCard, idAuthor));
         });
