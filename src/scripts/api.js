@@ -11,11 +11,7 @@ const getInitialCards = () => {
         headers: config.headers
     })
         .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-
-            return Promise.reject(`Ошибка: ${res.status}`)
+            return getResponseData(res);
         });
 }
 
@@ -24,10 +20,7 @@ const getAuthor = () => {
         headers: config.headers
     })
         .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
+            return getResponseData(res);
         });
 }
 
@@ -41,10 +34,7 @@ const editAccount = (nameVar, aboutVar) => {
         })
     })
         .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
+            return getResponseData(res);
         });
 }
 
@@ -57,10 +47,7 @@ const editAvatar = (avatarUrl) => {
         })
     })
         .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
+            return getResponseData(res);
         });
 }
 
@@ -74,10 +61,7 @@ const addPlace = (nameVar, linkVar) => {
         })
     })
         .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
+            return getResponseData(res);
         });
 }
 
@@ -87,10 +71,7 @@ const deletePlace = (idPlace) => {
         headers: config.headers,
     })
         .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
+            return getResponseData(res);
         });
 }
 
@@ -100,10 +81,7 @@ const like = (idLike) => {
         headers: config.headers
     })
         .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
+            return getResponseData(res);
         });
 }
 
@@ -113,11 +91,15 @@ const disLike = (idLike) => {
         headers: config.headers
     })
         .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
+            return getResponseData(res);
         });
+}
+
+function getResponseData(res) {
+    if (!res.ok) {
+        return Promise.reject(`Ошибка: ${res.status}`);
+    }
+    return res.json();
 }
 
 export {getInitialCards, getAuthor, editAccount, editAvatar, addPlace, deletePlace, like, disLike}
